@@ -4,17 +4,33 @@ using namespace std;
 // test final
 
 int pb = 0,pnb = 0;
+/*
 float pCerveja = 0, pRefriN = 0, pRefriD = 0,
 pCarneV = 0, pLinguicaT = 0, pLinguicaF = 0,
 pLimao = 0, pTomate = 0, pCebola = 0, pVinagre = 0, pPao = 0,
 pCarvao = 0, pSal = 0, pDetergente = 0,
 pEsponja= 0, pPapel = 0;
-float precos[16];
+*/
+
+typedef struct
+{
+    string id;
+    float p;
+    float qt;
+    string t;
+
+}produto;
+
+produto pro[16];
+
+
+
+
 
 void cPessoas()
 {
     
-    cout << "Pessoas que bebem: "<<pb<<endl<<"Pessoas que nao bebem: "<<pnb<<endl<<endl;
+    cout <<endl<< "Pessoas que bebem: "<<pb<<endl<<"Pessoas que nao bebem: "<<pnb<<endl<<endl;
     cout << "Quantas pessoas? ";
     cin >> pb;
     cout << "Quantas nao bebem? ";
@@ -28,6 +44,29 @@ void cProdutos()
     int x = 99;
     do
     {
+        cout <<endl;
+        for(int i = 0; i < 16; i++)
+        {
+            cout << (i+1) <<"- "<<pro[i].id<<": "<<pro[i].p<<endl;
+        }
+        cout <<endl<<"Para editar digite 1 - 16, Para todos digite 17, para nenhum digite 0: ";
+        cin >> x;
+
+        if((x>=1)&&(x<=16))
+        {
+           cout << "Digite o novo preco de "<<pro[x-1].id<<" :";
+           cin >> pro[x-1].p;
+        }
+        if(x == 17)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                cout << "Digite o novo preco de "<<pro[i].id<<" :";
+                cin >> pro[i].p;
+            }
+            
+        }
+        /*
         cout << "Cadastro dos produtos"<<endl<<endl<<"Preco dos produtos: "<<endl;
         cout << "1- Cerveja: "<<pCerveja<<" por lata"<<endl;
         cout << "2- Refri: "<<pRefriN<<" por litro"<<endl;
@@ -46,12 +85,12 @@ void cProdutos()
         cout << "15- Esponja de pia: "<<pEsponja<<" a unidade"<<endl;
         cout << "16- Papel Higienico: "<<pPapel<<" por pacote"<<endl;
         cout <<endl<<"Para editar digite 1 - 16, Para todos digite 17, para nenhum digite 0: ";
-        
+
         cin >> x;
         switch(x)
         {
             case 1:
-                
+          
                 break;
             case 2:
             
@@ -88,13 +127,19 @@ void cProdutos()
             default:
                 cout <<"Erro, tente novamente "<<endl;
         }
+        */
     } while (x != 0);
                 
 }
 
 void lista()
 {
-
+    cout <<endl;
+    for(int i = 0; i < 16; i++)
+    {
+        cout << (i+1) <<"- "<<pro[i].id<<": "<<pro[i].p<<" X "<<pro[i].qt<<" "
+        <<pro[i].t<<endl;
+    }
 }
 
 void custo()
@@ -105,7 +150,7 @@ void custo()
 int menu(int x)
 {
     
-    cout <<"Programa programador de churrascos by Pedro Fioravante"<<endl<<endl;
+    cout <<endl<<"Programa programador de churrascos by Pedro Fioravante"<<endl<<endl;
     cout <<"1- Cadastrar numero de participantes"<<endl
     <<"2- Cadastrar valor dos produtos"<<endl
     <<"3- Listar preco dos produtos e quantiades a serem compradas"<<endl
@@ -135,12 +180,49 @@ int menu(int x)
     }
     
 }
-
+void calc(produto pro[])
+{
+    
+}
 
 
 int main()
 {
     int x = 0;
+
+    pro[0].id = "Cerveja";
+    pro[1].id = "Refri";
+    pro[2].id = "Refri Diet";
+    pro[3].id = "Carne de Vaca";
+    pro[4].id = "Linguica Toscana";
+    pro[5].id = "Linguica de Frango";
+    pro[6].id = "Limao";
+    pro[7].id = "Tomate";
+    pro[8].id = "Cebola";
+    pro[9].id = "Vinagre";
+    pro[10].id = "Pao";
+    pro[11].id = "Carvao";
+    pro[12].id = "Sal Grosso";
+    pro[13].id = "Detergente";
+    pro[14].id = "Esponja";
+    pro[15].id = "Papel Higienico";
+    
+    pro[0].t = "lata";
+    pro[1].t = "litro";
+    pro[2].t = "litro";
+    pro[3].t = "kilo";
+    pro[4].t = "kilo";
+    pro[5].t = "kilo";
+    pro[6].t = "kilo";
+    pro[7].t = "kilo";
+    pro[8].t = "kilo";
+    pro[9].t = "unidade";
+    pro[10].t = "unidade";
+    pro[11].t = "saco";
+    pro[12].t = "saco";
+    pro[13].t = "unidade";
+    pro[14].t = "unidade";
+    pro[15].t = "pacote";
 
     while (x != -1)
     {

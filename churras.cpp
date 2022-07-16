@@ -1,9 +1,11 @@
 #include <iostream>
+#include <stdlib.h>
+#include <cmath>
 
 using namespace std;
-// test final
 
-int pb = 0,pnb = 0;
+
+int pb = 0,pnb = 0; //pessoas que bebem e nao
 /*
 float pCerveja = 0, pRefriN = 0, pRefriD = 0,
 pCarneV = 0, pLinguicaT = 0, pLinguicaF = 0,
@@ -25,11 +27,32 @@ produto pro[16];
 
 
 
-
+void cQt()//calculo das Quantidades
+{
+    pro[0].qt = (pb*6);
+    pro[1].qt = ceil(((pb*0.3)+pnb));
+    pro[2].qt = ceil(((pb+pnb)*0.2));
+    pro[3].qt = ((pb+pnb)*0.25);
+    pro[4].qt = ((pb+pnb)*0.05);
+    pro[5].qt = pro[4].qt;
+    pro[6].qt = pro[4].qt;
+    pro[7].qt = pro[4].qt;
+    pro[8].qt = ((pb+pnb)*0.01);
+    pro[9].qt = 1;
+    pro[10].qt = ((pb+pnb)*3);
+    pro[11].qt = ceil(pro[4].qt);
+    pro[12].qt = ceil(pro[2].qt);
+    pro[13].qt = 1;
+    pro[14].qt = 1;
+    pro[15].qt = ceil(pro[3].qt);
+    
+}
 
 void cPessoas()
 {
-    
+    cout<<flush;
+    system("CLS");
+
     cout <<endl<< "Pessoas que bebem: "<<pb<<endl<<"Pessoas que nao bebem: "<<pnb<<endl<<endl;
     cout << "Quantas pessoas? ";
     cin >> pb;
@@ -37,13 +60,18 @@ void cPessoas()
     cin >> pnb;
     pb-=pnb;
     
+    cQt();
+
 }
 
 void cProdutos()
 {
     int x = 99;
     do
-    {
+    {   
+        cout<<flush;
+        system("CLS");
+
         cout <<endl;
         for(int i = 0; i < 16; i++)
         {
@@ -134,6 +162,9 @@ void cProdutos()
 
 void lista()
 {
+    cout<<flush;
+    system("CLS");
+    
     cout <<endl;
     for(int i = 0; i < 16; i++)
     {
@@ -149,7 +180,9 @@ void custo()
 
 int menu(int x)
 {
-    
+    cout<<flush;
+    system("CLS");
+
     cout <<endl<<"Programa programador de churrascos by Pedro Fioravante"<<endl<<endl;
     cout <<"1- Cadastrar numero de participantes"<<endl
     <<"2- Cadastrar valor dos produtos"<<endl
@@ -180,10 +213,7 @@ int menu(int x)
     }
     
 }
-void calc(produto pro[])
-{
-    
-}
+
 
 
 int main()

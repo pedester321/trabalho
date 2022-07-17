@@ -6,6 +6,9 @@ using namespace std;
 
 
 int pb = 0,pnb = 0; //pessoas que bebem e nao
+float tpb = 0 , tpnb = 0; //total a ser pego pra cada pessoaBebe e pessoaNaoBebe
+
+float total = 0;
 /*
 float pCerveja = 0, pRefriN = 0, pRefriD = 0,
 pCarneV = 0, pLinguicaT = 0, pLinguicaF = 0,
@@ -25,7 +28,25 @@ typedef struct
 
 produto pro[16];
 
+void clearScreen()
+{
+    #ifdef WINDOWS
+        cout<<flush;    
+        std::system("cls");
+    #else
+        cout<<flush;
+        std::system ("clear");
+    #endif
+}
 
+void cTotal()//calculo do total
+{
+    for(int i = 0; i < 16; i++)
+    {
+        total += total +(pro[i].p*pro[i].qt);
+    }
+    total*= 1.05; // 5% extra pra despesas
+}
 
 void cQt()//calculo das Quantidades
 {
@@ -50,8 +71,7 @@ void cQt()//calculo das Quantidades
 
 void cPessoas()
 {
-    cout<<flush;
-    system("CLS");
+    clearScreen();
 
     cout <<endl<< "Pessoas que bebem: "<<pb<<endl<<"Pessoas que nao bebem: "<<pnb<<endl<<endl;
     cout << "Quantas pessoas? ";
@@ -69,15 +89,14 @@ void cProdutos()
     int x = 99;
     do
     {   
-        cout<<flush;
-        system("CLS");
+        clearScreen();
 
         cout <<endl;
         for(int i = 0; i < 16; i++)
         {
             cout << (i+1) <<"- "<<pro[i].id<<": "<<pro[i].p<<endl;
         }
-        cout <<endl<<"Para editar digite 1 - 16, Para todos digite 17, para nenhum digite 0: ";
+        cout <<endl<<"Para editar digite 1 - 16, Para todos digite 18, para nenhum digite 0: ";
         cin >> x;
 
         if((x>=1)&&(x<=16))
@@ -85,7 +104,7 @@ void cProdutos()
            cout << "Digite o novo preco de "<<pro[x-1].id<<" :";
            cin >> pro[x-1].p;
         }
-        if(x == 17)
+        if(x == 18)
         {
             for (int i = 0; i < 16; i++)
             {
@@ -162,34 +181,66 @@ void cProdutos()
 
 void lista()
 {
-    cout<<flush;
-    system("CLS");
+    clearScreen();
+    string lol;
     
     cout <<endl;
     for(int i = 0; i < 16; i++)
     {
-        cout << (i+1) <<"- "<<pro[i].id<<": "<<pro[i].p<<" X "<<pro[i].qt<<" "
+        cout << (i+1) <<"- "<<pro[i].id<<": R$"<<pro[i].p<<" X "<<pro[i].qt<<" "
         <<pro[i].t<<endl;
     }
+
+    cout <<"Digite qualuqer coisa para voltar ao menu ";
+    cin >> lol;
 }
 
 void custo()
 {
+    cTotal();
+    
+    float x1,x2,x3,dif;
+    string lol;
+    // x1 = Valor total do churrasco, caso fosse dividido igual para todos
 
+    // x2 = Valor total a ser pago pelas pessoas que NÃO BEBEM, já descontando os 25%
+
+    // dif = Aqui é calculado o a diferença que não será paga por quem não bebe
+    // e que terá que ser rateada para os bebuns do churrasco
+
+    // x3 = Esta variável irá calcular o valor total para as pessoas bebuns do churrasco
+
+    x1 = (total / (pb+pnb));
+    tpnb = x1*0,75;
+    x2 = tpnb*pnb;
+    dif = ((x1*pnb)-x2);
+    x3 =(x1*pb)+dif;
+    
+    tpb =x3;
+    
+    clearScreen();
+
+    cout <<"Total a ser pago: R$"<<total<<endl;
+    cout <<"Total para quem bebe: R$"<<tpb<<endl;
+    cout <<"Total para quem NAO bebe; R$"<<tpnb<<endl<<endl;
+    cout <<"digite qualquer coisa para sair volar ao menu ";
+    cin>>lol;
 }
 
 int menu(int x)
 {
-    cout<<flush;
-    system("CLS");
+    clearScreen();
 
-    cout <<endl<<"Programa programador de churrascos by Pedro Fioravante"<<endl<<endl;
+    cout <<endl<<"Programa programador de churrascos by Pedro Fioravante";
+    cout <<endl<< "Pessoas que bebem: "<<pb<<endl<<"Pessoas que nao bebem: "<<pnb<<endl<<endl;
+
     cout <<"1- Cadastrar numero de participantes"<<endl
     <<"2- Cadastrar valor dos produtos"<<endl
     <<"3- Listar preco dos produtos e quantiades a serem compradas"<<endl
     <<"4- Custo total para cada pessoa"<<endl
     <<endl<<"Escolha umas das opcoes ou digite 0 para fecha o programa: ";
     cin >> x;
+    
     switch(x)
     {
         case 0:
@@ -214,12 +265,8 @@ int menu(int x)
     
 }
 
-
-
-int main()
+void nomes()
 {
-    int x = 0;
-
     pro[0].id = "Cerveja";
     pro[1].id = "Refri";
     pro[2].id = "Refri Diet";
@@ -237,22 +284,31 @@ int main()
     pro[14].id = "Esponja";
     pro[15].id = "Papel Higienico";
     
-    pro[0].t = "lata";
-    pro[1].t = "litro";
-    pro[2].t = "litro";
-    pro[3].t = "kilo";
-    pro[4].t = "kilo";
-    pro[5].t = "kilo";
-    pro[6].t = "kilo";
-    pro[7].t = "kilo";
-    pro[8].t = "kilo";
+    pro[0].t = "latas";
+    pro[1].t = "litros";
+    pro[2].t = "litros";
+    pro[3].t = "kilos";
+    pro[4].t = "kilos";
+    pro[5].t = "kilos";
+    pro[6].t = "kilos";
+    pro[7].t = "kilos";
+    pro[8].t = "kilos";
     pro[9].t = "unidade";
-    pro[10].t = "unidade";
-    pro[11].t = "saco";
-    pro[12].t = "saco";
+    pro[10].t = "unidades";
+    pro[11].t = "sacos";
+    pro[12].t = "sacos";
     pro[13].t = "unidade";
     pro[14].t = "unidade";
-    pro[15].t = "pacote";
+    pro[15].t = "pacotes";
+
+}
+
+
+int main()
+{
+    int x = 0;
+
+    nomes();
 
     while (x != -1)
     {

@@ -1,12 +1,13 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
+#include <iomanip>
 
 using namespace std;
 
 
 int pb = 0,pnb = 0; //pessoas que bebem e nao
-float tpb = 0 , tpnb = 0; //total a ser pego pra cada pessoaBebe e pessoaNaoBebe
+double tpb = 0 , tpnb = 0; //total a ser pego pra cada pessoaBebe e pessoaNaoBebe
 
 float total = 0;
 /*
@@ -39,13 +40,24 @@ void clearScreen()
     #endif
 }
 
+void wait()
+{
+    string lol;
+    cout <<endl<<endl<<"Digite qualquer coisa para voltar ao menu ";
+    cin >> lol;
+}
+
 void cTotal()//calculo do total
 {
+    double x = 0;
+
     for(int i = 0; i < 16; i++)
     {
-        total += total +(pro[i].p*pro[i].qt);
+        x +=(pro[i].p*pro[i].qt);
     }
-    total*= 1.05; // 5% extra pra despesas
+    x*= 1.05; // 5% extra pra despesas
+
+    total = x;
 }
 
 void cQt()//calculo das Quantidades
@@ -62,10 +74,10 @@ void cQt()//calculo das Quantidades
     pro[9].qt = 1;
     pro[10].qt = ((pb+pnb)*3);
     pro[11].qt = ceil(pro[4].qt);
-    pro[12].qt = ceil(pro[2].qt);
+    pro[12].qt = ceil(0.02*(pnb+pb));
     pro[13].qt = 1;
     pro[14].qt = 1;
-    pro[15].qt = ceil(pro[3].qt);
+    pro[15].qt = ceil(0.025*(pnb+pb));
     
 }
 
@@ -94,21 +106,21 @@ void cProdutos()
         cout <<endl;
         for(int i = 0; i < 16; i++)
         {
-            cout << (i+1) <<"- "<<pro[i].id<<": "<<pro[i].p<<endl;
+            cout << (i+1) <<"- "<<pro[i].id<<": R$"<<pro[i].p<<endl;
         }
         cout <<endl<<"Para editar digite 1 - 16, Para todos digite 18, para nenhum digite 0: ";
         cin >> x;
 
         if((x>=1)&&(x<=16))
         {
-           cout << "Digite o novo preco de "<<pro[x-1].id<<" :";
+           cout << "Digite o novo preco de "<<pro[x-1].id<<" : R$";
            cin >> pro[x-1].p;
         }
         if(x == 18)
         {
             for (int i = 0; i < 16; i++)
             {
-                cout << "Digite o novo preco de "<<pro[i].id<<" :";
+                cout << "Digite o novo preco de "<<pro[i].id<<" : R$";
                 cin >> pro[i].p;
             }
             
@@ -182,8 +194,7 @@ void cProdutos()
 void lista()
 {
     clearScreen();
-    string lol;
-    
+        
     cout <<endl;
     for(int i = 0; i < 16; i++)
     {
@@ -191,16 +202,15 @@ void lista()
         <<pro[i].t<<endl;
     }
 
-    cout <<"Digite qualuqer coisa para voltar ao menu ";
-    cin >> lol;
+    wait();
 }
 
 void custo()
 {
     cTotal();
     
-    float x1,x2,x3,dif;
-    string lol;
+    double x1,x2,x3,dif;
+    
     // x1 = Valor total do churrasco, caso fosse dividido igual para todos
 
     // x2 = Valor total a ser pago pelas pessoas que NÃO BEBEM, já descontando os 25%
@@ -211,20 +221,22 @@ void custo()
     // x3 = Esta variável irá calcular o valor total para as pessoas bebuns do churrasco
 
     x1 = (total / (pb+pnb));
-    tpnb = x1*0,75;
+    tpnb = x1*0.75;
     x2 = tpnb*pnb;
     dif = ((x1*pnb)-x2);
-    x3 =(x1*pb)+dif;
+    x3 =((x1*pb)+dif)/pb;
     
     tpb =x3;
     
     clearScreen();
 
-    cout <<"Total a ser pago: R$"<<total<<endl;
-    cout <<"Total para quem bebe: R$"<<tpb<<endl;
-    cout <<"Total para quem NAO bebe; R$"<<tpnb<<endl<<endl;
-    cout <<"digite qualquer coisa para sair volar ao menu ";
-    cin>>lol;
+    
+
+    cout <<"Total a ser pago: R$"<< std::fixed << std::setprecision(2)<<total<<endl;
+    cout <<"Total para quem bebe: R$"<< std::fixed << std::setprecision(2)<<tpb<<endl;
+    cout <<"Total para quem NAO bebe: R$"<< std::fixed << std::setprecision(2)<<tpnb;
+    
+    wait();
 }
 
 int menu(int x)
@@ -303,7 +315,6 @@ void nomes()
 
 }
 
-
 int main()
 {
     int x = 0;
@@ -314,5 +325,4 @@ int main()
     {
        x = menu(x);
     }
-    
 }

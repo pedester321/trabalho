@@ -31,7 +31,7 @@ produto pro[16];
 
 void clearScreen()
 {
-    #ifdef WINDOWS
+    #ifdef _WIN32
         cout<<flush;    
         std::system("cls");
     #else
